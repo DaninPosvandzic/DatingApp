@@ -28,7 +28,9 @@
             }
             <a routerLink="/errors" routerLinkActive="text-black">Errors</a>
         </nav>
-
+        @if(busyservice.busyRequestCount() > 0){
+            <span class="loading loading-spinner text-accent"></span>
+        }
         <!-- RIGHT SIDE -->
         <div class="flex items-center gap-4">
 
@@ -48,7 +50,7 @@
                 </button>
 
                 <ul tabindex="0"
-                    class="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
+                    class="dropdown-content z-50 menu bg-base-100 rounded-box w-52 p-2 shadow">
                     
                     @for (theme of themes; track $index) {
                         <li (click)="handleSelectTheme(theme)">
@@ -74,7 +76,7 @@
                     <ul tabindex="0"
                         class="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
                         
-                        <li><a>Edit profile</a></li>
+                        <li><a routerLink="/members/{{user.id}}">Edit profile</a></li>
                         <li><a (click)="logout()">Logout</a></li>
                     </ul>
                 </div>
