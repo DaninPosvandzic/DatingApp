@@ -15,7 +15,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           if(error.error.errors){
             const modelStateErrors=[];
             for(const key in error.error.errors){
-              if(error.error.error[key]){
+              if(error.error.errors[key]){
                 modelStateErrors.push(error.error.errors[key])
               }
               
