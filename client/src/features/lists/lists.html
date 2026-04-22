@@ -9,7 +9,7 @@
     }
 </div>
 
-@if(members().length>0){
+@if(members().length){
     <div class="grid grid-cols-5 gap-6 mt-3">
         @for (member of members(); track member.id) {
             <app-member-card [member]="member"></app-member-card>

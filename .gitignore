@@ -484,3 +484,8 @@ $RECYCLE.BIN/
 *.swp
 appsettings.json
 dating.db*
+client/angular.json
+client/localhost-key.pem
+client/localhost.pem
+client/package-lock.json
+client/package.json

@@ -10,30 +10,37 @@ import { MemberCard } from "../members/member-card/member-card";
   styleUrl: './lists.css',
 })
 export class Lists implements OnInit {
-  private likesService=inject(LikesService);
-  protected members=signal<Member[]>([]);
-  protected predicate='liked';
+  private likesService = inject(LikesService);
+  protected members = signal<Member[]>([]);
+  protected predicate = 'liked';
+  protected pageSize=10;
+  protected pageNumber=1;
 
-  tabs=[
-    {label:'Liked',value:'liked'},
-    {label:'Liked me',value:'likedBy'},
-    {label:'Mutual',value:'mutual'},
-  ]
+  tabs = [
+    { label: 'Liked', value: 'liked' },
+    { label: 'Liked me', value: 'likedBy' },
+    { label: 'Mutual', value: 'mutual' },
+  ];
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.loadLikes();
   }
 
-  setPredicate(predicate:string){
-    if(this.predicate!==predicate){
-      this.predicate=predicate;
+  setPredicate(predicate: string) {
+    if (this.predicate !== predicate) {
+      this.predicate = predicate;
       this.loadLikes();
     }
   }
 
-  loadLikes(){
+  loadLikes() {
     this.likesService.getLikes(this.predicate).subscribe({
-      next:members=>this.members.set(members)
-    })
+      next: members => this.members.set(members),
+    });
+  }
+  onPageChange(event:{pageNumber:number,pageSize:number}){
+    this.pageSize=event.pageSize;
+    this.pageNumber=event.pageNumber;
+    this.loadLikes();
   }
 }
