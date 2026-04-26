@@ -25,6 +25,7 @@
 
                 <a routerLink="/lists" routerLinkActive="text-black">Lists</a>
                 <a routerLink="/messages" routerLinkActive="text-black">Messages</a>
+                <a *appHasRole="['Admin','Moderator']" routerLink="/admin" routerLinkActive="text-black">Admin</a>
             }
             <a routerLink="/errors" routerLinkActive="text-black">Errors</a>
         </nav>
