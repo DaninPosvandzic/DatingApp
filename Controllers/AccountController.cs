@@ -6,10 +6,12 @@ using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace API.Controllers;
 
@@ -102,5 +104,19 @@ public async Task<ActionResult<UserDto>>Register
             Expires=DateTime.UtcNow.AddDays(7)
         };
         Response.Cookies.Append("refreshToken",refreshToken,cookieOptions);
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<ActionResult> Logout()
+    {
+        await userManager.Users
+        .Where(x=>x.Id==User.GetMemberId())
+        .ExecuteUpdateAsync(setters => setters.SetProperty(x=>x.RefreshToken,_=>null)
+        .SetProperty(x=>x.RefreshTokenExpiry,_=>null));
+
+        Response.Cookies.Delete("refreshToken");
+        
+        return Ok();
     }
 }
